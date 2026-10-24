@@ -8,6 +8,8 @@ Contact Number: 9172684018
 
 Email ID: akshaybhaskare1996@gmail.com
 
+Project Overview
+
 Responsive React + TypeScript + Vite recreation based on the supplied reference screenshot.
 
 ## Run locally
