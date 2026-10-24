@@ -18,32 +18,36 @@ npm run build
 npm run preview
 ```
 
-## Assets
+## How the dashboard behaves (matches the reference GIF)
 
-- Place the provided camera recording at `public/assets/videos/camera-demo.mp4`.
-- The Camera View has a local-file picker for temporary preview.
-- Switch to **Map View**, then use **Load PCD** to select a local `.pcd` point cloud.
+- Opens on **Map View**; the **Camera View** is the small preview at bottom-left.
+- **Click the preview** to swap the two views (animated). The top label switches between *Map View* and *Camera View*, and hovering the preview shows *Click to enter ... view*.
+- The vertical **zoom rail** next to the preview controls the map zoom in both states.
+- Map: top-down 3D point cloud. **Drag to pan** (hand cursor), **scroll / pinch to zoom**, **right-drag to rotate/tilt**. A simulated robot marker is drawn on the map.
+- Camera: plays a local video file, or a live webcam feed (*Choose video* / *Use webcam*, top right, while in Camera View).
+- **Quick Goal** opens the goal modal with the same map; click the ground to place a goal, then **Initiate** starts a (simulated) mission.
 
-Until a source PCD is loaded, Map View shows a clearly illustrative generated point cloud. The small map in Camera View is also a placeholder graphic and is not original facility data.
+## Assets (all local, no internet needed after `npm install`)
 
-## Implemented in this starter
+| File | Purpose |
+|------|---------|
+| `public/assets/maps/warehouse.pcd` | Sample map (binary PCD with `rgb`). Loaded by default. |
+| `public/assets/videos/camera-demo.mp4` | **Add your assignment video here.** Until then the camera panel shows instructions and the webcam / file options still work. |
 
-- Responsive dashboard shell, reference-inspired layout and dark navigation rail.
-- Mission status / pause-resume UI state.
-- Auto/manual mode selector.
-- Quick Goal modal and simulated goal selection.
-- Initiate and emergency stop demo states (no real robot connection).
-- Interactive camera/map view switching.
-- Video file selection.
-- Three.js point-cloud viewer, OrbitControls, PCD file selection and resize handling.
-- Map zoom slider, responsive layout rules, keyboard escape for modal.
+- Use **Load PCD** (Map View) to open any `.pcd`. Z-up clouds (KITTI, PCL, etc.) are rotated to a top-down view automatically; clouds without colour are drawn dark, clouds with an `rgb` field keep their colours.
+- Regenerate the sample map with `python3 scripts/generate_sample_map.py` (needs numpy).
 
-## Not yet connected / required before final submission
+## Architecture notes
 
-- Official assignment video, map/PCD and brand assets.
-- Exact map geometry, robot pose, telemetry source, mission API and ROS bridge (if needed).
-- Validate all controls and visuals against the full reference GIF/demo.
-- Browser/device test pass and final screenshots.
+- Both views stay mounted and are moved between *full* and *preview* with CSS, so the video keeps playing and the WebGL context is not recreated on swap.
+- `PointCloudCanvas` uses an orthographic top-down camera with `OrbitControls` configured for map-style pan; zoom state is shared with the slider.
+- Navigation goals use map coordinates (X right, Y up, metres), the same frame as the PCD.
+- Mission and goal state live in reducers under `src/features/`.
+
+## Not yet connected
+
+- ROS integration (the bonus): replace the static PCD with a `sensor_msgs/PointCloud2` subscription via `roslibjs` / rosbridge and feed it into `PointCloudCanvas`.
+- Real telemetry, mission API and robot pose (the pose in `ROBOT_POSE` is simulated).
 
 ## Safety
 

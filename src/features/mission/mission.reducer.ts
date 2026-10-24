@@ -7,6 +7,7 @@ import type {
 export const initialMissionState: MissionState = {
   status: "READY",
   missionId: null,
+  targetGoalId: null,
   error: null,
 };
 
@@ -25,8 +26,10 @@ export function missionReducer(
       }
 
       return {
+         ...state,
         status: "RUNNING",
         missionId: action.missionId,
+        targetGoalId: action.targetGoalId,
         error: null,
       };
     }

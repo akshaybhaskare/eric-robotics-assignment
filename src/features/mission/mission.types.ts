@@ -10,6 +10,7 @@ export type MissionStatus =
 export type MissionState = {
   status: MissionStatus;
   missionId: string | null;
+  targetGoalId: string | null;
   error: string | null;
 };
 
@@ -17,6 +18,7 @@ export type MissionAction =
   | {
       type: "MISSION_INITIATE";
       missionId: string;
+      targetGoalId: string;
     }
   | {
       type: "MISSION_PAUSE";
