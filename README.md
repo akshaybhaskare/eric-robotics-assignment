@@ -1,3 +1,8 @@
+
+Full Name: Akshay Vijay Bhaskare
+Contact Number: 9172684018
+Email ID: akshaybhaskare1996@gmail.com
+
 # ERIC Insight.IO Dashboard — starter implementation
 
 Responsive React + TypeScript + Vite recreation based on the supplied reference screenshot.
